@@ -1,9 +1,19 @@
+"""
+Database models.
+"""
 from django.db import models
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin
+)
 
 
-class BaseModel(models.Model):
-    """Base model for future models."""
+class User(AbstractBaseUser, PermissionsMixin):
+    """User in the system."""
+    email = models.EmailField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
-    class Meta:
-        abstract = True
-
+    USERNAME_FIELD = 'email'
