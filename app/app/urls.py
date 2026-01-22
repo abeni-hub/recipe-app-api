@@ -21,6 +21,5 @@ urlpatterns = [
             url_name='schema',
             title='API Documentation',
         ),
-        name='swagger-ui',
-    ),
+    )
 ]
