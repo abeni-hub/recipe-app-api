@@ -1,10 +1,12 @@
 """
 Test for models.
 """
+from decimal import Decimal
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+from core import models
 
 class ModelTests(TestCase):
     """Test models."""
@@ -69,3 +71,11 @@ class ModelTests(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
+
+
+def test_create_user_recipe(self):
+    """Test creating a recipe is successful."""
+    user = get_user_model().objects.create_user(
+        'test@example.com',
+        'testpass123',
+    )
