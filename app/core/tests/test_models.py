@@ -87,3 +87,4 @@ def test_create_user_recipe(self):
         price=Decimal('5.50'),
         description='Sample recipe description.',
     )
+    self.assertEqual(str(recipe), recipe.title)
