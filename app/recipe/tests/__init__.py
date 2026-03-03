@@ -13,6 +13,8 @@ from rest_framework.test import APIClient
 from core.models import Recipe
 from recipe.serializers import RecipeSerializer
 
+RECIPES_URL = reverse('recipe:recipe-list')
+
 
 def create_user(**params):
     """Create and return a new user."""
@@ -27,3 +29,35 @@ def create_user(**params):
 
     return get_user_model().objects.create_user(**defaults)
     return recipe
+
+class PublicRecipeApiTests(TestCase):
+    """Test unauthenticated recipe API access."""
+
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_auth_required(self):
+        """Test that authentication is required."""
+        res = self.client.get(reverse('recipe:recipe-list'))
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+class PrivateRecipeApiTests(TestCase):
+    """Test authenticated recipe API access."""
+
+    def setUp(self):
+        self.user = create_user()
+        self.client = APIClient()
+        self.client.force_authenticate(self.user)
+
+    def test_retrieve_recipes(self):
+        """Test retrieving a list of recipes."""
+        Recipe.objects.create(user=self.user, title='Sample recipe 1')
+        Recipe.objects.create(user=self.user, title='Sample recipe 2')
+
+        res = self.client.get(reverse('recipe:recipe-list'))
+
+        recipes = Recipe.objects.all().order_by('-id')
+        serializer = RecipeSerializer(recipes, many=True)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
