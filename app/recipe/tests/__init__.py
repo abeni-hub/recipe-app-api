@@ -17,7 +17,6 @@ RECIPES_URL = reverse('recipe:recipe-list')
 
 
 def create_user(**params):
-    """Create and return a new user."""
     defaults = {
         'title': 'Sample recipe title',
         'time_minutes': 22,
