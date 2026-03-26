@@ -44,7 +44,6 @@ class PrivateRecipeApiTests(TestCase):
         self.client.force_authenticate(self.user)
 
     def test_retrieve_recipes(self):
-        """Test retrieving a list of recipes."""
         Recipe.objects.create(user=self.user, title='Sample recipe 1')
         Recipe.objects.create(user=self.user, title='Sample recipe 2')
 
