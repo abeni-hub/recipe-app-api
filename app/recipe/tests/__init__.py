@@ -1,6 +1,3 @@
-"""
-Tests for the recipe app.
-"""
 
 from decimal import Decimal
 from django.contrib.auth import get_user_model
@@ -35,7 +32,6 @@ class PublicRecipeApiTests(TestCase):
         self.client = APIClient()
 
     def test_auth_required(self):
-        """Test that authentication is required."""
         res = self.client.get(reverse('recipe:recipe-list'))
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
