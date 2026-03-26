@@ -55,7 +55,6 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_recipes_limited_to_user(self):
-        """Test retrieving recipes for user."""
         other_user = create_user(
           'other@example.com',
           'testpass',
